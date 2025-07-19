@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown to 10 Dec 2027</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #00ffcc;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .countdown {
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Countdown to 10 December 2027, 19:00 (UTC+2)</h1>
+  <div class="countdown" id="countdown">Loading...</div>
+
+  <script>
+    const targetDate = new Date("2027-12-10T17:00:00Z"); // 7 PM UTC+2 = 5 PM UTC
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").textContent = "Time reached!";
+        return;
+      }
+
+      const milliseconds = diff % 1000;
+      const totalSeconds = Math.floor(diff / 1000);
+      const seconds = totalSeconds % 60;
+      const minutes = Math.floor(totalSeconds / 60) % 60;
+      const hours = Math.floor(totalSeconds / 3600) % 24;
+      const days = Math.floor(totalSeconds / 86400);
+
+      document.getElementById("countdown").textContent =
+        `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds.toString().padStart(3, '0')}ms`;
+
+      requestAnimationFrame(updateCountdown);
+    }
+
+    updateCountdown();
+  </script>
+</body>
+</html>
